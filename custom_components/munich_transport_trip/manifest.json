@@ -1,0 +1,14 @@
+{
+  "domain": "munich_transport_trip",
+  "name": "Munich public transport (MVG)",
+  "config_flow": true,
+  "documentation": "https://github.com/medlor/home-assistant-munich-transport",
+  "requirements": ["mvg @ git+https://github.com/medlor/mvg@main"],
+  "ssdp": [],
+  "zeroconf": [],
+  "homekit": {},
+  "dependencies": [],
+  "codeowners": ["@vas3k", "@MrGauz", "@medlor"],
+  "iot_class": "cloud_polling",
+  "version": "0.1.1"
+}
