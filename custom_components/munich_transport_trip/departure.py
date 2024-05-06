@@ -31,8 +31,9 @@ class Departure:
     departure_planned: datetime
     departure_real: datetime
     departure_delay_in_minutes: int
+    destination_delay_in_minutes: int
     destination_planned: datetime
-    messages: list
+    destination_real: datetime
     departure_in_minutes: int
     human_departure_in_minutes: str
     icon: str | None = None
@@ -40,8 +41,7 @@ class Departure:
 
     @classmethod
     def from_dict(cls, source):
-        line_visuals = TRANSPORT_TYPE_VISUALS.get(source['type']) or {}
-        #timestamp = datetime.fromtimestamp(source['time'])
+        line_visuals = TRANSPORT_TYPE_VISUALS.get(source['type']) or { "code": "ANY", "icon": DEFAULT_ICON, "color": "#666518"}
         return cls(
             departure_station=source['departureStation'],
             destination_station=source['destinationStation'],
@@ -49,12 +49,13 @@ class Departure:
             line_type=source['type'],
             departure_planned=datetime.fromisoformat(source['departurePlanned']),
             departure_real=datetime.fromisoformat(source['departureReal']),
-            departure_delay_in_minutes=source['departureDelayInMinutes'],
+            departure_delay_in_minutes=source['departureDelayInMinutes'], 
+            destination_delay_in_minutes=source['destinationDelayInMinutes'],
             destination_planned=datetime.fromisoformat(source['destinationPlanned']),
-            messages=source['messages'],
+            destination_real=datetime.fromisoformat(source['destinationReal']),
             departure_in_minutes=source['departureInMinutes'],
             human_departure_in_minutes=f'{source['departureInMinutes']}' + (f'+{source['departureDelayInMinutes']}' if source['departureDelayInMinutes'] >0 else '') + ' min',
-            icon=line_visuals.get("icon") or DEFAULT_ICON,
+            icon=line_visuals.get("icon"),
             bg_color=line_visuals.get("color"),
         )
 
@@ -65,7 +66,7 @@ class Departure:
             "departure_station": self.departure_station,
             "destination_station": self.destination_station,
             "human_departure_in_minutes": self.human_departure_in_minutes,
-            "departure_real": self.departure_real.isoformat(timespec="minutes"),
-            "messages": self.messages,
+            "departure_real": self.departure_real.astimezone().time(),
+            "destination_real": self.destination_real.astimezone().time(),
             "color": self.bg_color,
         }

@@ -28,16 +28,22 @@ class MunichTransportTripTimetableCard extends HTMLElement {
             if (showTripName) {
                 content += `<div class="stop">${entity.attributes.friendly_name}</div>`;
             }
-
+            content += `<div class="departure">
+            <div class="header">Line</div>
+            <div class="header">Departure</div>
+            <div class="header">Destination</div>
+            <div class="header">Arrival</div>
+            </div>`
             const timetable = entity.attributes.departures.slice(0, maxEntries).map((departure) =>
                 `<div class="departure">
                     <div class="line">
                         <div class="line-icon" style="background-color: ${departure.color}">${departure.line_name}</div>
                     </div>
-                    <div class="direction">${(departure.destination_station.length > stationMaxLen)
+                    <div class="time">${departure.human_departure_in_minutes}</div>
+                    <div class="destination">${(departure.destination_station.length > stationMaxLen)
                     ? departure.destination_station.slice(0, stationMaxLen - 3) + '...'
                     : departure.destination_station}</div>
-                    <div class="time">${departure.human_departure_in_minutes}</div>
+                    <div class="arrival">${departure.destination_real}</div>
                 </div>`
             );
 
@@ -65,8 +71,7 @@ class MunichTransportTripTimetableCard extends HTMLElement {
                 line-height: 1.5em;
             }
             .stop {
-                opacity: 0.6;
-                font-weight: 400;
+                font-weight: 700;
                 width: 100%;
                 text-align: left;
                 padding: 10px 10px 5px 5px;
@@ -78,16 +83,15 @@ class MunichTransportTripTimetableCard extends HTMLElement {
                 padding-bottom: 20px;
             }
             .departure {
+                white-space: nowrap;
                 padding-top: 10px;
-                display: flex;
-                flex-direction: row;
-                flex-wrap: nowrap;
-                align-items: flex-start;
+                display: grid;
+                grid-template-columns: 70px 90px auto 70px; /* Define the column widths */
                 gap: 20px;
             }
             .line {
                 min-width: 70px;
-                text-align: right;
+                align-self: right;
             }
             .line-icon {
                 display: inline-block;
@@ -99,15 +103,27 @@ class MunichTransportTripTimetableCard extends HTMLElement {
                 color: #FFFFFF;
                 text-align: center;
             }
-            .direction {
-                align-self: center;
-                flex-grow: 1;
+            .destination {
+                text-align: right;
+                padding-right: 5px;
+            }
+            .arrival {
+                text-align: right;
             }
             .time {
-                align-self: flex-start;
+                text-align: right;
                 font-weight: 700;
                 line-height: 2em;
                 padding-right: 10px;
+            }
+            .header {
+                font-weight: 400;
+                line-height: 2em;
+                padding-right: 5px;
+                padding-left: 2px;
+                text-align: center;
+                opacity: 0.9;
+                border-bottom: 1px solid lightgrey;
             }
         `;
 

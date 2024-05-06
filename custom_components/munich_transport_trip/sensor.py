@@ -145,7 +145,7 @@ class TransportSensor(SensorEntity):
 
 
 # run in docker: 
-# export PYTHONPATH=/config/custom_components/; 
+# export PYTHONPATH=/config/custom_components/
 # python3 -i -m munich_transport_trip.sensor
 # _LOGGER.setLevel(logging.DEBUG)
 if __name__ == "__main__":

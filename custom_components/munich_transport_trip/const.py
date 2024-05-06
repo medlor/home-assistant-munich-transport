@@ -1,7 +1,7 @@
 from datetime import timedelta
 
 DOMAIN = "munich_transport_trip"
-SCAN_INTERVAL = timedelta(seconds=60)
+SCAN_INTERVAL = timedelta(seconds=28800)
 
 DEFAULT_ICON = "mdi:clock"
 
@@ -15,6 +15,7 @@ CONF_TYPE_SUBURBAN = "S-Bahn"
 CONF_TYPE_SUBWAY = "U-Bahn"
 CONF_TYPE_TRAM = "Tram"
 CONF_TYPE_BUS = "Bus"
+CONF_TYPE_REGIONAL_BUS = "Regionalbus"
 
 
 TRANSPORT_TYPE_VISUALS = {
@@ -34,4 +35,5 @@ TRANSPORT_TYPE_VISUALS = {
         "color": "#E30613",
     },
     CONF_TYPE_BUS: {"code": "BUS", "icon": "mdi:bus", "color": "#133B4B"},
+    CONF_TYPE_REGIONAL_BUS: {"code": "BUS", "icon": "mdi:bus", "color": "#133B4B"},
 }
